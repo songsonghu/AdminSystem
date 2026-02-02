@@ -29,22 +29,31 @@
 ## 📁 项目结构
 
 ```
-AdminSystem/
-├── Controllers/          # 控制器
-├── Models/              # 数据模型
-│   ├── Entities/       # 实体类
-│   ├── DTOs/           # 数据传输对象
-│   └── ViewModels/     # 视图模型
-├── Services/            # 业务服务
-│   ├── Interfaces/     # 服务接口
-│   └── Implementations/# 服务实现
-├── Data/                # 数据访问
-│   ├── Repositories/   # 仓储
-│   └── Migrations/     # 数据库迁移
-├── Helpers/             # 工具类
-├── Common/              # 公共类
-├── wwwroot/            # 静态文件
-└── appsettings.json    # 配置文件
+AdminSystem/                  # 解决方案根目录
+├── .github/                 # GitHub Actions 工作流
+│   └── workflows/
+│       └── dotnet.yml      # CI/CD 配置
+├── AdminSystem/             # 主项目文件夹
+│   ├── Controllers/        # API 控制器
+│   ├── Models/             # 数据模型
+│   │   ├── Entities/      # 实体类
+│   │   ├── DTOs/          # 数据传输对象
+│   │   └── ViewModels/    # 视图模型
+│   ├── Services/           # 业务服务
+│   │   ├── Interfaces/    # 服务接口
+│   │   └── Implementations/ # 服务实现
+│   ├── Data/               # 数据访问
+│   │   └── Repositories/  # 仓储
+│   ├── Helpers/            # 工具类
+│   ├── Common/             # 公共类
+│   ├── wwwroot/           # 静态文件
+│   ├── AdminSystem.csproj  # 项目文件
+│   ├── Program.cs          # 启动入口
+│   └── appsettings.json    # 配置文件
+├── AdminSystem.sln         # Visual Studio 解决方案
+├── .gitignore
+├── LICENSE
+└── README.md
 ```
 
 ## 🎯 快速开始
@@ -56,13 +65,24 @@ git clone https://github.com/songsonghu/AdminSystem.git
 cd AdminSystem
 ```
 
-### 2. 安装依赖
+### 2. 使用 Visual Studio 2022 打开
+
+双击打开解决方案文件：
 
 ```bash
-dotnet restore
+start AdminSystem.sln  # Windows
+open AdminSystem.sln   # macOS
 ```
 
-### 3. 配置数据库
+或使用命令行：
+
+### 3. 安装依赖
+
+```bash
+dotnet restore AdminSystem.sln
+```
+
+### 4. 配置数据库
 
 项目默认使用 SQL Server LocalDB，连接字符串在 `appsettings.json` 中配置：
 
@@ -76,16 +96,18 @@ dotnet restore
 
 如果需要使用其他数据库，请修改连接字符串。
 
-### 4. 执行数据库迁移
+### 5. 执行数据库迁移
 
 ```bash
+cd AdminSystem
 dotnet ef migrations add InitialCreate
 dotnet ef database update
 ```
 
-### 5. 运行项目
+### 6. 运行项目
 
 ```bash
+cd AdminSystem  # 如果不在项目目录
 dotnet run
 ```
 
@@ -93,7 +115,7 @@ dotnet run
 - HTTPS: https://localhost:5001
 - HTTP: http://localhost:5000
 
-### 6. 访问 Swagger
+### 7. 访问 Swagger
 
 在浏览器中打开：https://localhost:5001/swagger
 
