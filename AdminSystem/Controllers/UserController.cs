@@ -202,6 +202,11 @@ public class UserController : ControllerBase
     {
         try
         {
+            if (!ModelState.IsValid)
+            {
+                return Ok(ApiResult<bool>.Fail("请求参数无效"));
+            }
+
             var success = await _userService.ResetPasswordAsync(id, dto.NewPassword);
             if (!success)
                 return Ok(ApiResult<bool>.Fail("重置密码失败"));
