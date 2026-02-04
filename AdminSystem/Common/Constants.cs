@@ -11,9 +11,9 @@ public static class Constants
     public const string DefaultPassword = "123456";
 
     /// <summary>
-    /// 默认密码的 MD5 值（e10adc3949ba59abbe56e057f20f883e）
+    /// 默认密码的 MD5 值（E10ADC3949BA59ABBE56E057F20F883E）
     /// </summary>
-    public const string DefaultPasswordMd5 = "e10adc3949ba59abbe56e057f20f883e";
+    public const string DefaultPasswordMd5 = "E10ADC3949BA59ABBE56E057F20F883E";
 
     /// <summary>
     /// JWT 配置
@@ -24,6 +24,11 @@ public static class Constants
         /// JWT 密钥
         /// </summary>
         public const string Secret = "AdminSystem_JWT_Secret_Key_2024_Very_Long_Secret_Key_For_Security";
+
+        /// <summary>
+        /// JWT 安全密钥 (别名)
+        /// </summary>
+        public const string SecurityKey = Secret;
 
         /// <summary>
         /// 发行者

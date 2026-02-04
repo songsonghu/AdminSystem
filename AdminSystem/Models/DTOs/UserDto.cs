@@ -212,3 +212,14 @@ public class ChangePasswordDto
     /// </summary>
     public string ConfirmPassword { get; set; } = string.Empty;
 }
+
+/// <summary>
+/// 重置密码 DTO
+/// </summary>
+public class ResetPasswordDto
+{
+    /// <summary>
+    /// 新密码
+    /// </summary>
+    public string NewPassword { get; set; } = string.Empty;
+}

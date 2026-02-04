@@ -193,6 +193,8 @@ public class ApplicationDbContext : DbContext
     /// </summary>
     private void SeedData(ModelBuilder modelBuilder)
     {
+        var seedDate = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
         // 1. 添加默认角色
         modelBuilder.Entity<Role>().HasData(
             new Role
@@ -203,7 +205,7 @@ public class ApplicationDbContext : DbContext
                 Description = "系统超级管理员，拥有所有权限",
                 Sort = 1,
                 IsEnabled = true,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = seedDate,
                 IsDeleted = false
             },
             new Role
@@ -214,7 +216,7 @@ public class ApplicationDbContext : DbContext
                 Description = "系统管理员",
                 Sort = 2,
                 IsEnabled = true,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = seedDate,
                 IsDeleted = false
             },
             new Role
@@ -225,7 +227,7 @@ public class ApplicationDbContext : DbContext
                 Description = "普通用户",
                 Sort = 3,
                 IsEnabled = true,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = seedDate,
                 IsDeleted = false
             }
         );
@@ -241,7 +243,7 @@ public class ApplicationDbContext : DbContext
                 Sort = 1,
                 IsEnabled = true,
                 Description = "总公司",
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = seedDate,
                 IsDeleted = false
             }
         );
@@ -257,7 +259,7 @@ public class ApplicationDbContext : DbContext
                 Email = "admin@admin.com",
                 Status = UserStatus.Normal,
                 DepartmentId = 1,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = seedDate,
                 IsDeleted = false
             }
         );
@@ -268,7 +270,7 @@ public class ApplicationDbContext : DbContext
             {
                 UserId = 1,
                 RoleId = 1,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = seedDate
             }
         );
 
@@ -287,7 +289,7 @@ public class ApplicationDbContext : DbContext
                 Sort = 1,
                 IsVisible = true,
                 IsEnabled = true,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = seedDate,
                 IsDeleted = false
             },
             // 用户管理（菜单）
@@ -304,7 +306,7 @@ public class ApplicationDbContext : DbContext
                 Sort = 1,
                 IsVisible = true,
                 IsEnabled = true,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = seedDate,
                 IsDeleted = false
             },
             // 角色管理（菜单）
@@ -321,7 +323,7 @@ public class ApplicationDbContext : DbContext
                 Sort = 2,
                 IsVisible = true,
                 IsEnabled = true,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = seedDate,
                 IsDeleted = false
             },
             // 菜单管理（菜单）
@@ -338,7 +340,7 @@ public class ApplicationDbContext : DbContext
                 Sort = 3,
                 IsVisible = true,
                 IsEnabled = true,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = seedDate,
                 IsDeleted = false
             },
             // 部门管理（菜单）
@@ -355,7 +357,7 @@ public class ApplicationDbContext : DbContext
                 Sort = 4,
                 IsVisible = true,
                 IsEnabled = true,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = seedDate,
                 IsDeleted = false
             },
             // 日志管理（目录）
@@ -371,7 +373,7 @@ public class ApplicationDbContext : DbContext
                 Sort = 2,
                 IsVisible = true,
                 IsEnabled = true,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = seedDate,
                 IsDeleted = false
             },
             // 操作日志（菜单）
@@ -388,7 +390,7 @@ public class ApplicationDbContext : DbContext
                 Sort = 1,
                 IsVisible = true,
                 IsEnabled = true,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = seedDate,
                 IsDeleted = false
             },
             // 登录日志（菜单）
@@ -405,21 +407,21 @@ public class ApplicationDbContext : DbContext
                 Sort = 2,
                 IsVisible = true,
                 IsEnabled = true,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = seedDate,
                 IsDeleted = false
             }
         );
 
         // 6. 分配超级管理员所有菜单权限
         modelBuilder.Entity<RoleMenu>().HasData(
-            new RoleMenu { RoleId = 1, MenuId = 1, CreatedAt = DateTime.UtcNow },
-            new RoleMenu { RoleId = 1, MenuId = 2, CreatedAt = DateTime.UtcNow },
-            new RoleMenu { RoleId = 1, MenuId = 3, CreatedAt = DateTime.UtcNow },
-            new RoleMenu { RoleId = 1, MenuId = 4, CreatedAt = DateTime.UtcNow },
-            new RoleMenu { RoleId = 1, MenuId = 5, CreatedAt = DateTime.UtcNow },
-            new RoleMenu { RoleId = 1, MenuId = 6, CreatedAt = DateTime.UtcNow },
-            new RoleMenu { RoleId = 1, MenuId = 7, CreatedAt = DateTime.UtcNow },
-            new RoleMenu { RoleId = 1, MenuId = 8, CreatedAt = DateTime.UtcNow }
+            new RoleMenu { RoleId = 1, MenuId = 1, CreatedAt = seedDate },
+            new RoleMenu { RoleId = 1, MenuId = 2, CreatedAt = seedDate },
+            new RoleMenu { RoleId = 1, MenuId = 3, CreatedAt = seedDate },
+            new RoleMenu { RoleId = 1, MenuId = 4, CreatedAt = seedDate },
+            new RoleMenu { RoleId = 1, MenuId = 5, CreatedAt = seedDate },
+            new RoleMenu { RoleId = 1, MenuId = 6, CreatedAt = seedDate },
+            new RoleMenu { RoleId = 1, MenuId = 7, CreatedAt = seedDate },
+            new RoleMenu { RoleId = 1, MenuId = 8, CreatedAt = seedDate }
         );
     }
 }

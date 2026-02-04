@@ -192,6 +192,31 @@ public class UserController : ControllerBase
     }
 
     /// <summary>
+    /// 重置密码（指定新密码）
+    /// </summary>
+    /// <param name="id">用户 ID</param>
+    /// <param name="dto">重置密码信息</param>
+    /// <returns>操作结果</returns>
+    [HttpPost("reset-password/{id}/custom")]
+    public async Task<ActionResult<ApiResult<bool>>> ResetPassword(int id, [FromBody] ResetPasswordDto dto)
+    {
+        try
+        {
+            var success = await _userService.ResetPasswordAsync(id, dto.NewPassword);
+            if (!success)
+                return Ok(ApiResult<bool>.Fail("重置密码失败"));
+
+            _logger.LogInformation("重置密码成功（自定义密码），用户 ID: {Id}", id);
+            return Ok(ApiResult<bool>.Ok(true, "重置密码成功"));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "重置密码失败，用户 ID: {Id}", id);
+            return Ok(ApiResult<bool>.Fail("重置密码失败：" + ex.Message));
+        }
+    }
+
+    /// <summary>
     /// 修改密码
     /// </summary>
     /// <param name="changePasswordDto">修改密码信息</param>

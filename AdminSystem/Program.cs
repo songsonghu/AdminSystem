@@ -22,30 +22,21 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUserService, UserService>();
 
 // 3. 配置 JWT 认证
-var jwtSecret = Constants.Jwt.Secret;
-var key = Encoding.UTF8.GetBytes(jwtSecret);
-
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(options =>
-{
-    options.RequireHttpsMetadata = false;
-    options.SaveToken = true;
-    options.TokenValidationParameters = new TokenValidationParameters
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
     {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateIssuer = true,
-        ValidIssuer = Constants.Jwt.Issuer,
-        ValidateAudience = true,
-        ValidAudience = Constants.Jwt.Audience,
-        ValidateLifetime = true,
-        ClockSkew = TimeSpan.Zero
-    };
-});
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Constants.Jwt.SecurityKey)),
+            ValidateIssuer = true,
+            ValidIssuer = Constants.Jwt.Issuer,
+            ValidateAudience = true,
+            ValidAudience = Constants.Jwt.Audience,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
+    });
 
 // 4. 配置授权
 builder.Services.AddAuthorization();
@@ -61,10 +52,17 @@ builder.Services.AddCors(options =>
     });
 });
 
-// 6. 配置控制器
+// 6. 添加内存缓存
+builder.Services.AddMemoryCache();
+
+// 7. 添加健康检查
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<ApplicationDbContext>();
+
+// 8. 配置控制器
 builder.Services.AddControllers();
 
-// 7. 配置 Swagger
+// 9. 配置 Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -140,10 +138,13 @@ app.UseAuthorization();
 // 7. 映射控制器
 app.MapControllers();
 
-// 8. 默认路由
+// 8. 健康检查端点
+app.MapHealthChecks("/health");
+
+// 9. 默认路由
 app.MapGet("/", () => Results.Redirect("/swagger"));
 
-// 9. 自动创建数据库和应用迁移
+// 10. 自动创建数据库和应用迁移
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
