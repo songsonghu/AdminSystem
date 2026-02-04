@@ -1,4 +1,5 @@
 using AdminSystem.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdminSystem.Models.DTOs;
 
@@ -211,4 +212,17 @@ public class ChangePasswordDto
     /// 确认新密码
     /// </summary>
     public string ConfirmPassword { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// 重置密码 DTO
+/// </summary>
+public class ResetPasswordDto
+{
+    /// <summary>
+    /// 新密码
+    /// </summary>
+    [Required(ErrorMessage = "新密码不能为空")]
+    [MinLength(6, ErrorMessage = "密码长度不能少于6位")]
+    public string NewPassword { get; set; } = string.Empty;
 }

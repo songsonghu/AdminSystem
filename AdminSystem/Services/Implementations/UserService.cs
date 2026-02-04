@@ -245,6 +245,20 @@ public class UserService : IUserService
     }
 
     /// <inheritdoc />
+    public async Task<bool> ResetPasswordAsync(int id, string newPassword)
+    {
+        var user = await _userRepository.GetByIdAsync(id);
+        if (user == null)
+        {
+            return false;
+        }
+
+        user.Password = MD5Helper.Encrypt(newPassword);
+        await _userRepository.UpdateAsync(user);
+        return true;
+    }
+
+    /// <inheritdoc />
     public async Task<bool> ChangePasswordAsync(int userId, ChangePasswordDto changePasswordDto)
     {
         var user = await _userRepository.GetByIdAsync(userId);

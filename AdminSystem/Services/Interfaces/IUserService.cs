@@ -44,6 +44,11 @@ public interface IUserService
     Task<bool> ResetPasswordAsync(int id);
 
     /// <summary>
+    /// 重置密码（指定新密码）
+    /// </summary>
+    Task<bool> ResetPasswordAsync(int id, string newPassword);
+
+    /// <summary>
     /// 修改密码
     /// </summary>
     Task<bool> ChangePasswordAsync(int userId, ChangePasswordDto changePasswordDto);

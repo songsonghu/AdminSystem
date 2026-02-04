@@ -263,6 +263,9 @@ ServiceFabricBackup/
 *.ldf
 *.ndf
 
+# LocalDB files
+*.mssql
+
 # Business Intelligence projects
 *.rdl.data
 *.bim.layout

@@ -191,6 +191,67 @@ dotnet run
 3. 支持软删除，数据不会真正删除
 4. 所有 API 需要 JWT 认证（除登录接口外）
 
+## 🔧 故障排查
+
+### 问题 1：数据库连接失败
+
+**错误信息**：
+```
+A network-related or instance-specific error occurred
+```
+
+**解决方案**：
+```bash
+# 检查 LocalDB 状态
+sqllocaldb info
+
+# 启动 LocalDB
+sqllocaldb start mssqllocaldb
+
+# 如果问题持续，修改连接字符串使用 SQL Server Express
+```
+
+### 问题 2：迁移失败
+
+**错误信息**：
+```
+Build failed. Use dotnet build to see the errors.
+```
+
+**解决方案**：
+```bash
+# 清理项目
+dotnet clean
+
+# 重新编译
+dotnet build
+
+# 删除旧迁移
+rm -rf Migrations/
+
+# 重新创建迁移
+dotnet ef migrations add InitialCreate
+
+# 更新数据库
+dotnet ef database update
+```
+
+### 问题 3：登录失败（密码错误）
+
+**解决方案**：
+- 确认密码为 `123456`
+- 检查数据库中密码哈希值是否为 `E10ADC3949BA59ABBE56E057F20F883E`
+- 如果不一致，手动更新数据库：
+```sql
+UPDATE Users SET Password = 'E10ADC3949BA59ABBE56E057F20F883E' WHERE UserName = 'admin'
+```
+
+### 问题 4：健康检查失败
+
+**检查方法**：
+- 访问健康检查端点：https://localhost:5001/health
+- 如果返回 "Unhealthy"，检查数据库连接是否正常
+
 ## 🤝 贡献
 
 欢迎提交 Issue 和 Pull Request！

@@ -9,7 +9,7 @@ namespace AdminSystem.Helpers;
 public static class MD5Helper
 {
     /// <summary>
-    /// MD5 加密（32位小写）
+    /// MD5 加密（32位大写）
     /// </summary>
     /// <param name="input">待加密字符串</param>
     /// <returns>加密后的字符串</returns>
@@ -24,13 +24,7 @@ public static class MD5Helper
         var inputBytes = Encoding.UTF8.GetBytes(input);
         var hashBytes = md5.ComputeHash(inputBytes);
 
-        var sb = new StringBuilder();
-        foreach (var b in hashBytes)
-        {
-            sb.Append(b.ToString("x2"));
-        }
-
-        return sb.ToString();
+        return Convert.ToHexString(hashBytes).ToUpper(); // 确保大写
     }
 
     /// <summary>
